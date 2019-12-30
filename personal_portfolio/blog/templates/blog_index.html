@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block page_content %}
+
+<section id="one">
+
+    <header class="major">
+      {% for post in singlePost %}
+      <h2><a href="{% url 'blog_detail' post.pk%}" style="color:green;">{{ post.title }}</a><br /></h2>
+    </header>
+
+     <p style="font-size:30px !important;">{{ post.body | linebreaks | slice:":900" }}...</p> 
+       
+    <ul class="actions">
+      <li><a href="{% url 'blog_detail' post.pk%}" class="button">Learn More</a></li>
+    </ul>
+
+     {% endfor %}
+
+</section>
+
+
+
+<section id="two">
+    <div class="row">
+    
+      <article class="col-12 col-12-xsmall work-item">
+            <hr>
+           {% for post in posts %}
+            <h3><a href="{% url 'blog_detail' post.pk%}" style="color:green;">{{ post.title }}</a></h3>
+            
+            <small>
+                {{ post.created_on.date }} |&nbsp;
+                Categories:&nbsp;
+                {% for category in post.categories.all %}
+                <a href="{% url 'blog_category' category.name %}">
+                    {{ category.name }}
+                </a>&nbsp;
+                {% endfor %}
+           </small><br><br>
+
+          <p style="font-size:30px !important;">{{ post.body | linebreaks | slice:":300" }}...</p> <br><br> 
+
+          {% endfor %}
+
+      </article>
+     
+    </div>
+</section>
+
+{% endblock %}
